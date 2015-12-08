@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.alpha.healthmobiletechnican"
+    android:versionCode="9"
+    android:versionName="1.1.4" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Light.NoTitleBar" 
+        android:name="com.alpha.healthmobiletechnician.AppContext">
+        <activity
+            android:name="com.alpha.healthmobiletechnician.FirstActivity"
+            android:label="@string/app_name" >
+            
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                
+            </intent-filter>
+            
+            
+        </activity> 
+        <service android:name="com.alpha.healthmobiletechnician.UpdateService" >
+        </service>
+            <activity
+            android:name="com.alpha.healthmobiletechnician.MainActivity"
+            android:screenOrientation="portrait" >
+            </activity>
+    
+            
+            
+            
+        
+            <!--个推SDK配置开始-->
+        <!-- 配置的第三方参数属性 -->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="rKFzplXUh7A7kHumGCDJW1" /><!--替换为第三方应用的APPID-->
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="ZlSFID7w5W7tKkIkd8Ooe7" /><!--替换为第三方应用的APPKEY-->
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="7hebZSLlKc6KMCZjr6M8b4" /><!--替换为第三方应用的APPSECRET-->
+        <meta-data
+            android:name="PUSH_GROUPID"
+            android:value="" />
+        <!-- 配置第三方Receiver -->
+        <receiver
+            android:name="com.getui.demo.PushDemoReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.Y4GRNX1Jgs5ZiCzqw3jCT8" />
+            </intent-filter>
+        </receiver>
+        <!-- 配置SDK核心服务 -->
+        <service
+            android:name="com.igexin.sdk.PushService"
+            android:exported="true"
+            android:label="NotificationCenter"
+            android:process=":pushservice" >
+        </service>
+        <receiver android:name="com.igexin.sdk.PushReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.igexin.sdk.action.refreshls" />
+                <!-- 以下四项为可选的action声明，可大大提高service存活率和消息到达速度 -->
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+        <!--
+        <receiver
+            android:name="com.igexin.sdk.PushReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.pushmanager" />
+            </intent-filter>
+        </receiver>
+        -->
+        <receiver
+            android:name="com.igexin.sdk.PushManagerReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.pushmanager" />
+            </intent-filter>
+        </receiver>
+        <activity
+            android:name="com.igexin.sdk.PushActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+<activity   
+    android:name="com.igexin.getuiext.activity.GetuiExtActivity"   
+    android:configChanges="orientation|keyboard|keyboardHidden"  
+    android:excludeFromRecents="true"    android:process=":pushservice"   
+    android:taskAffinity="android.task.myServicetask"   
+    android:theme="@android:style/Theme.Translucent.NoTitleBar"   
+    android:exported="false"/>
+        <service
+            android:name="com.igexin.download.DownloadService"
+            android:process=":pushservice" />
+        <receiver android:name="com.igexin.download.DownloadReceiver" >
+            <intent-filter>
+                <!--这个com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4固定，不能修改-->
+                <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4" />
+                <!-- android:name="com.igexin.sdk.action.第三方的appId" -->
+                <action android:name="com.igexin.sdk.action.rKFzplXUh7A7kHumGCDJW1"/>
+            </intent-filter>
+        </receiver>
+        <provider
+            android:name="com.igexin.download.DownloadProvider"
+            android:authorities="downloads.com.getui.demotechnician"
+            android:process=":pushservice" />
+        <!-- android:authorities="downloads.com.getui.demo" -->
+         
+        <receiver
+            android:name="com.igexin.getuiext.service.PayloadReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <!-- 这个com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4固定，不能修改 -->
+                <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4" />
+                <!-- android:name="com.igexin.sdk.action.第三方的appId" -->
+                <action android:name="com.igexin.sdk.action.rKFzplXUh7A7kHumGCDJW1" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.igexin.getuiext.service.GetuiExtService"
+            android:process=":pushservice" />
+    <!-- 个推SDK配置结束 -->
+    
+               <!-- 友盟社会化分享配置 -->
+           
+         <!-- ###################注册SDK使用的Activity###################### -->
+        <!--分享编辑页-->
+        <activity
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/Theme.UMDialog"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
+        </activity>
+
+        <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID-->
+                <data android:scheme="tencent1104911029" /> 
+            </intent-filter>
+        </activity>
+        <activity android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait">
+        </activity>
+  <!-- ############ 微信和朋友圈 SSO授权分享回调 ############ -->
+<activity
+   android:name="com.alpha.healthmobiletechnician.wxapi.WXEntryActivity"
+   android:theme="@android:style/Theme.Translucent.NoTitleBar"
+   android:configChanges="keyboardHidden|orientation|screenSize"
+   android:exported="true"
+   android:screenOrientation="portrait" />
+
+    <!-- ###################添加UmengAppkey###################### -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5666776ee0f55a21c8001e56" >
+        </meta-data>
+
+    </application>
+
+   <!-- 友盟社会化分享权限配置开始 -->
+    <!-- ###################声明SDK使用的相关权限###################### -->
+    <!-- 检测网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
+    <!-- 获取mac地址作为用户的备用唯一标识 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />     
+    <!-- 获取用户手机的IMEI，用来唯一的标识用户 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />      
+    <!-- 缓存资源优先存入SDcard -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 允许应用程序联网，以便向我们的服务器端发送数据 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- QQ、QQ空间所需权限 -->
+<uses-permission android:name="android.permission.GET_TASKS" />
+   <!-- 友盟社会化分享权限配置结束 -->
+    
+    <!-- 个推SDK权限配置开始 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- <uses-permission android:name="getui.permission.GetuiService.第三方包名" /> -->
+    <uses-permission android:name="getui.permission.GetuiService.com.alpha.healthmobile" />
+    <!-- 自定义权限 -->
+    <!--
+    <permission
+        android:name="getui.permission.GetuiService.第三方包名"
+        android:protectionLevel="normal" >
+    </permission>
+    -->
+    <permission
+        android:name="getui.permission.GetuiService.com.alpha.healthmobiletechnician"
+        android:protectionLevel="normal" >
+    </permission>
+<!-- 个推SDK权限配置结束 -->
+
+</manifest>
